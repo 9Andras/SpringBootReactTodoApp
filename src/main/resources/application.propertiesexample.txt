@@ -1,0 +1,22 @@
+#modify and rename this file to application.properties to set it up for yourself#
+
+spring.application.name=SpringBootReactTodoApp
+#logging.level.org.springframework=debug
+management.endpoints.web.exposure.include=*
+
+
+#MySQL sourcing
+spring.datasource.url=jdbc:mysql://localhost:port/DBname
+spring.datasource.username=*preferred username*
+spring.datasource.password=*preferred password*
+
+#Postgres sourcing
+#spring.datasource.url=jdbc:postgresql://localhost:3303/localhost:port/DBname
+#spring.datasource.username=*preferred username*
+#spring.datasource.password=*preferred password*
+
+#automatically create tables and show logs
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+spring.jpa.defer-datasource-initialization=true
+spring.jpa.show-sql=true
