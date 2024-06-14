@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "todos")
@@ -27,14 +28,14 @@ public class Todo {
     @JsonIgnore
     private User user;
     
-    public Todo(int id, String title, String comment, LocalDateTime deadLine, LocalDateTime updatedAt) {
+    public Todo(int id, String title, String comment, LocalDateTime deadLine, LocalDateTime updatedAt, boolean done) {
         this.id = id;
         this.title = title;
         this.comment = comment;
         this.deadLine = deadLine;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = updatedAt;
-        this.done = false;
+        this.done = done;
     }
     
     public Todo() {

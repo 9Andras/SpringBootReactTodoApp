@@ -29,18 +29,19 @@ public class User {
     private LocalDateTime updatedAt;
     @OneToMany(mappedBy = "user")
     private List<Todo> todos;
-    public User(int id, String userName, String emailAddress, String password, LocalDateTime updatedAt) {
+    public User(int id, String userName, String emailAddress, String password, List<Todo> todos) {
         this.id = id;
         this.userName = userName;
         this.emailAddress = emailAddress;
         this.password = password;
         this.createdAt = LocalDateTime.now();
-        this.updatedAt = updatedAt;
-        this.todos = new ArrayList<>();
+        this.updatedAt = null;
+        this.todos = todos;
     }
     public User() {
         this.createdAt=LocalDateTime.now();
         this.updatedAt=null;
+        this.todos=new ArrayList<>();
     }
     
     public int getId() {
@@ -92,7 +93,7 @@ public class User {
     }
     
     public List<Todo> getTodos() {
-        return new ArrayList<>();
+        return new ArrayList<>(todos);
     }
     
     public void setTodos(List<Todo> todos) {

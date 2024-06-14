@@ -11,9 +11,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+@RestController
 public class UserResource {
     private final UserRepository userRepository;
     
@@ -57,8 +60,34 @@ public class UserResource {
     }
     
     //update
-    //TODO: implement userUpdating method!
-    
+    //TODO: test the endpoint
+    @PatchMapping("/api/users/{id}")
+    public ResponseEntity<Object> updateUserInfo(@PathVariable int id, @RequestBody Map<String, Object> updates) {
+        Optional<User> userToFind = userRepository.findById(id);
+        
+        if (userToFind.isEmpty()) {
+            throw new UserNotFoundException("id: " + id);
+        }
+        
+        User userToUpdate = userToFind.get();
+        
+        if (updates.containsKey("userName")) {
+            userToUpdate.setUserName((String) updates.get("userName"));
+        }
+        if (updates.containsKey("emailAddress")) {
+            userToUpdate.setEmailAddress((String) updates.get("emailAddress"));
+        }
+        if (updates.containsKey("password")) {
+            userToUpdate.setPassword((String) updates.get("password"));
+        }
+        userToUpdate.setUpdatedAt(LocalDateTime.now());
+        
+        User updatedUser = userRepository.save(userToUpdate);
+        EntityModel<User> entityModel = EntityModel.of(updatedUser);
+        
+        
+        return ResponseEntity.ok(entityModel);
+    }
     
     //delete
     @DeleteMapping("/api/users/{id}")
