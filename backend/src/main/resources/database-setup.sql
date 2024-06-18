@@ -1,6 +1,6 @@
 /*TODO:UPDATE for actual DB population*/
 
-insert into user_details (userName, email, password)
+insert into user_details (userName, emailAddress, password)
 values
     ('user1', 'user1@example.com', 'PassWord1'),
     ('user2', 'user2@example.com', 'PassWord2'),
@@ -45,3 +45,5 @@ values
     ('Learn a new language', 'Start with basic phrases.'),
     ('Plant flowers in the garden', 'Brighten up the backyard.'),
     ('Take a photography walk', 'Capture interesting scenes.');
+
+---Assign 3 random todos to each user

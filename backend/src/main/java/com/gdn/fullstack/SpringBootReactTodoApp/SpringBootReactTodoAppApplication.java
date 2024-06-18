@@ -5,9 +5,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 public class SpringBootReactTodoAppApplication {
-
-	public static void main(String[] args) {
-		SpringApplication.run(SpringBootReactTodoAppApplication.class, args);
-	}
-
+    
+    public static void main(String[] args) {
+        SpringApplication.run(SpringBootReactTodoAppApplication.class, args);
+    }
+    
 }

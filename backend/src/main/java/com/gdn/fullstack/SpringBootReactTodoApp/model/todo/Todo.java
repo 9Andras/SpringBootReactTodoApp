@@ -6,9 +6,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity(name = "todos")
@@ -17,12 +18,18 @@ public class Todo {
     @GeneratedValue
     private int id;
     @Size(min = 5, message = "Title should be at least 5 characters long!")
+    @NotEmpty
+    @NotNull
     private String title;
     @Size(min = 2, message = "Comment should be at least 2 characters long!")
+    @NotEmpty
+    @NotNull
     private String comment;
     private LocalDateTime deadLine;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    @NotEmpty
+    @NotNull
     private boolean done;
     @ManyToOne
     @JsonIgnore
@@ -39,9 +46,9 @@ public class Todo {
     }
     
     public Todo() {
-        this.createdAt=LocalDateTime.now();
-        this.updatedAt=null;
-        this.done=false;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = null;
+        this.done = false;
     }
     
     public int getId() {

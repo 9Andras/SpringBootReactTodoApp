@@ -61,12 +61,12 @@ public class UserResource {
     
     //update
     //TODO: test the endpoint
-    @PatchMapping("/api/users/{id}")
-    public ResponseEntity<Object> updateUserInfo(@PathVariable int id, @RequestBody Map<String, Object> updates) {
-        Optional<User> userToFind = userRepository.findById(id);
+    @PatchMapping("/api/users/{userId}")
+    public ResponseEntity<Object> updateUserInfo(@PathVariable int userId, @RequestBody Map<String, Object> updates) {
+        Optional<User> userToFind = userRepository.findById(userId);
         
         if (userToFind.isEmpty()) {
-            throw new UserNotFoundException("id: " + id);
+            throw new UserNotFoundException("id: " + userId);
         }
         
         User userToUpdate = userToFind.get();
@@ -90,9 +90,9 @@ public class UserResource {
     }
     
     //delete
-    @DeleteMapping("/api/users/{id}")
-    public void deleteUser(@PathVariable int id) {
-        userRepository.deleteById(id);
+    @DeleteMapping("/api/users/{userId}")
+    public void deleteUser(@PathVariable int userId) {
+        userRepository.deleteById(userId);
     }
     
 }
