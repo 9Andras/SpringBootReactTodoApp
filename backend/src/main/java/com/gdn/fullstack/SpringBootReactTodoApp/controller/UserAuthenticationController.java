@@ -67,7 +67,7 @@ public class UserAuthenticationController {
         }
         
         //Check if username is already in us
-        Optional<User> existingUserName = userRepository.findByUsername(user.getUserName());
+        Optional<User> existingUserName = userRepository.findByUserName(user.getUserName());
         if (existingUserName.isPresent()) {
             throw new ExistingUserException("Username is already in use. Please choose another and try again!");
         }
