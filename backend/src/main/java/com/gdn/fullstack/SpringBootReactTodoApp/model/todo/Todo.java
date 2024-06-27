@@ -2,20 +2,18 @@ package com.gdn.fullstack.SpringBootReactTodoApp.model.todo;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.gdn.fullstack.SpringBootReactTodoApp.model.user.User;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity(name = "todos")
 public class Todo {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Size(min = 5, message = "Title should be at least 5 characters long!")
     @NotEmpty
@@ -128,4 +126,20 @@ public class Todo {
                 ", user=" + user +
                 '}';
     }
+    
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Todo todo = (Todo) o;
+        return id == todo.id && done == todo.done && Objects.equals(title, todo.title) && Objects.equals(comment, todo.comment) && Objects.equals(deadLine, todo.deadLine) && Objects.equals(createdAt, todo.createdAt) && Objects.equals(updatedAt, todo.updatedAt) && Objects.equals(user, todo.user);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, title, comment, deadLine, createdAt, updatedAt, done, user);
+    }
+    
+    
 }

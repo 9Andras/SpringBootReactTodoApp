@@ -43,4 +43,23 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         
         return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
     }
+    
+    @ExceptionHandler(MissingFieldException.class)
+    public final ResponseEntity<ErrorDetails> handleMissingFieldException(MissingFieldException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+        
+        return new ResponseEntity<>(errorDetails, HttpStatus.BAD_REQUEST);
+    }
+    
+    @ExceptionHandler(ExistingUserException.class)
+    public ResponseEntity<ErrorDetails> handleExistingUserException(ExistingUserException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
+    
+    @ExceptionHandler(ExistingEmailException.class)
+    public ResponseEntity<ErrorDetails> handleExistingEmailException(ExistingEmailException ex, WebRequest request) {
+        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+        return new ResponseEntity<>(errorDetails, HttpStatus.UNPROCESSABLE_ENTITY);
+    }
 }

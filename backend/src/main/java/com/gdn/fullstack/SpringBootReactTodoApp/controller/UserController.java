@@ -3,45 +3,33 @@ package com.gdn.fullstack.SpringBootReactTodoApp.controller;
 import com.gdn.fullstack.SpringBootReactTodoApp.exception.UserNotFoundException;
 import com.gdn.fullstack.SpringBootReactTodoApp.model.user.User;
 import com.gdn.fullstack.SpringBootReactTodoApp.model.user.UserRepository;
-import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 @RestController
-public class UserResource {
-    private final UserRepository userRepository;
-    
-    public UserResource(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+public class UserController {
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     
     //CRUD:
     
-    //create
-    @PostMapping("/api/users")
-    public ResponseEntity<User> createUser(@Valid @RequestBody User user) {
-        User savedUser = userRepository.save(user);
-        
-        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path("/{id}")
-                .buildAndExpand(savedUser.getId())
-                .toUri();
-        
-        return ResponseEntity.created(location).build();
-    }
+    //create handled in UserAuthenticationController
     
     //read
     @GetMapping("/api/users")
     public List<User> retrieveAllUsers() {
+        
         return userRepository.findAll();
     }
     
@@ -60,7 +48,6 @@ public class UserResource {
     }
     
     //update
-    //TODO: test the endpoint
     @PatchMapping("/api/users/{userId}")
     public ResponseEntity<Object> updateUserInfo(@PathVariable int userId, @RequestBody Map<String, Object> updates) {
         Optional<User> userToFind = userRepository.findById(userId);
@@ -78,7 +65,8 @@ public class UserResource {
             userToUpdate.setEmailAddress((String) updates.get("emailAddress"));
         }
         if (updates.containsKey("password")) {
-            userToUpdate.setPassword((String) updates.get("password"));
+            userToUpdate.setPassword(passwordEncoder.encode(
+                    (String) updates.get("password")));
         }
         userToUpdate.setUpdatedAt(LocalDateTime.now());
         

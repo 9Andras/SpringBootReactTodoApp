@@ -1,20 +1,18 @@
 package com.gdn.fullstack.SpringBootReactTodoApp.model.user;
 
 import com.gdn.fullstack.SpringBootReactTodoApp.model.todo.Todo;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity(name = "user_details")
 public class User {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Size(min = 2, message = "User name should be at least 2 characters long!")
     @NotEmpty
@@ -115,5 +113,18 @@ public class User {
                 ", updatedAt=" + updatedAt +
                 ", todos=" + todos +
                 '}';
+    }
+    
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && Objects.equals(userName, user.userName) && Objects.equals(emailAddress, user.emailAddress) && Objects.equals(password, user.password) && Objects.equals(createdAt, user.createdAt) && Objects.equals(updatedAt, user.updatedAt) && Objects.equals(todos, user.todos);
+    }
+    
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, userName, emailAddress, password, createdAt, updatedAt, todos);
     }
 }

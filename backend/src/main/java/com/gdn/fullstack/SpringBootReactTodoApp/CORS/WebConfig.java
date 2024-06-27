@@ -1,4 +1,4 @@
-package com.gdn.fullstack.SpringBootReactTodoApp.controller.CORS;
+package com.gdn.fullstack.SpringBootReactTodoApp.CORS;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ public class WebConfig implements WebMvcConfigurer {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
                         .allowedOrigins("http://localhost:3000")
-                        .allowedMethods("GET", "POST", "DELETE", "HEAD", "OPTIONS")
+                        .allowedMethods("GET", "POST", "DELETE", "PATCH", "PUT", "HEAD", "OPTIONS")
                         .allowCredentials(true);
             }
         };

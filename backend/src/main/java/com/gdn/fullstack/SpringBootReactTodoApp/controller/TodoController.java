@@ -20,15 +20,19 @@ import java.util.Map;
 import java.util.Optional;
 
 @RestController
-public class TodoResource {
+public class TodoController {
     private final TodoRepository todoRepository;
     private final UserRepository userRepository;
     
-    public TodoResource(TodoRepository todoRepository, UserRepository userRepository) {
+    public TodoController(TodoRepository todoRepository, UserRepository userRepository) {
         this.todoRepository = todoRepository;
         this.userRepository = userRepository;
     }
     
+    @GetMapping("/api/all-todos")
+    public List<Todo> retrieveAllTodos() {
+        return todoRepository.findAll();
+    }
     
     //CRUD:
     //Create
@@ -117,7 +121,7 @@ public class TodoResource {
     
     //Delete
     @DeleteMapping("/api/users/{userId}/todos/{todoId}")
-    public ResponseEntity<Object> deleteTodoOfUser(@PathVariable int userId, @PathVariable int todoId) {
+    public ResponseEntity<Void> deleteTodoOfUser(@PathVariable int userId, @PathVariable int todoId) {
         Optional<User> userToFind = userRepository.findById(userId);
         
         if (userToFind.isEmpty()) {
